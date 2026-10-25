@@ -10,14 +10,14 @@ import (
 	"syscall"
 	"time"
 
-	"discord-bot/bot"
-	"discord-bot/config"
-	"discord-bot/handlers"
-	"discord-bot/lang"
-	"discord-bot/minecraft"
-	"discord-bot/music"
-	"discord-bot/payments"
-	"discord-bot/storage"
+	"discord-bot/modules/config"
+	"discord-bot/modules/discord/bot"
+	"discord-bot/modules/discord/handlers"
+	"discord-bot/modules/localization/lang"
+	"discord-bot/modules/minecraft"
+	"discord-bot/modules/music"
+	"discord-bot/modules/payments"
+	"discord-bot/modules/persistence/storage"
 
 	"github.com/bwmarrin/discordgo"
 )
@@ -98,6 +98,7 @@ func run() {
 		if err != nil {
 			slog.Warn("chatbridge init failed", "error", err)
 		} else {
+			h.SetMuteSynchronizer(bridge)
 			bridge.Start()
 			defer bridge.Stop()
 		}

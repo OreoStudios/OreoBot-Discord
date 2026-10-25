@@ -1,280 +1,307 @@
 {
-  "discord": {
-    "token": "PUT_DISCORD_TOKEN_IN_ENV",
-    "guild_id": "PUT_GUILD_ID_HERE",
-    "prefix": "!"
+  "anti_scam": {
+    "block_lookalikes": true,
+    "enabled": false,
+    "extra_domains": [],
+    "extra_keywords": [],
+    "feed": {
+      "enabled": true,
+      "refresh_minutes": 360,
+      "urls": [
+        "https://raw.githubusercontent.com/Discord-AntiScam/scam-links/main/list.json"
+      ]
+    },
+    "message": "⚠️ {user}, your message was removed for looking like a scam. If this was a mistake, contact a moderator.",
+    "new_account_days": 7,
+    "ocr": {
+      "api_key": "PUT_OCR_SPACE_API_KEY_HERE",
+      "enabled": false,
+      "max_image_bytes": 3145728
+    },
+    "protect_new_accounts": true,
+    "score_threshold": 2,
+    "timeout_minutes": 0
   },
-
-  "youtube": {
-    "api_key": "PUT_YOUTUBE_API_KEY_HERE"
+  "auto_restart_minutes": 0,
+  "chat_bridge": {
+    "ban_sync": false,
+    "channel_id": "",
+    "enabled": false,
+    "mc_channel_id": "",
+    "mod_sync": false,
+    "rabbitmq_uri": ""
   },
-
+  "commissions": {
+    "_comment_legal": "Shown as a legal notice at the bottom of invoices. Leave empty to omit. Newlines (\\n) are supported. Example for a French sole trader below.",
+    "discord_category": "PUT_COMMISSION_CATEGORY_ID_HERE",
+    "enabled": false,
+    "legal_entity": "Your Company — Type of Business\nSIREN 000 000 000 · SIRET 000 000 000 00000 · Code APE 00.00Z · Country",
+    "log_channel": "PUT_COMMISSION_LOG_CHANNEL_ID_HERE",
+    "panel_channel": "PUT_COMMISSION_PANEL_CHANNEL_ID_HERE",
+    "paypal_email": "",
+    "paypal_me_user": "",
+    "services": [
+      {
+        "description": "Describe what this service is",
+        "emoji": "🛠️",
+        "id": "example",
+        "name": "Example Service",
+        "starting_price": "50 EUR"
+      }
+    ],
+    "staff_roles": "PUT_STAFF_ROLE_ID_HERE"
+  },
+  "counting_game": {
+    "channel_id": "",
+    "delete_non_numbers": false,
+    "delete_wrong": false,
+    "enabled": false,
+    "fail_resets": false
+  },
+  "custom_commands": [],
   "database": {
     "driver": "sqlite",
+    "mongodb": {
+      "database": "discord_bot",
+      "uri": "mongodb://localhost:27017"
+    },
     "sqlite": {
       "path": "data/bot.db"
-    },
-    "mongodb": {
-      "uri": "mongodb://localhost:27017",
-      "database": "discord_bot"
     }
   },
-
+  "discord": {
+    "guild_id": "PUT_GUILD_ID_HERE",
+    "prefix": "!",
+    "token": "PUT_DISCORD_TOKEN_IN_ENV"
+  },
+  "github": {
+    "enabled": false,
+    "subscriptions": [],
+    "webhook_port": 0,
+    "webhook_secret": ""
+  },
+  "leave": {
+    "channel_id": "PUT_LEAVE_CHANNEL_ID_HERE",
+    "embed": {
+      "colour": "#f74343",
+      "image_enabled": false,
+      "image_url": "",
+      "message": "👋 %joined_user% has left the server.",
+      "thumbnail": "BOT",
+      "title": "Goodbye!"
+    },
+    "enabled": false
+  },
+  "link_filter": {
+    "allowed_roles": [
+      "PUT_ROLE_ID_ALLOWED_TO_POST_LINKS_HERE"
+    ],
+    "block_invites": true,
+    "delete_message": true,
+    "enabled": false,
+    "message": "{user} You are not allowed to post links here.",
+    "whitelist_domains": [
+      "github.com",
+      "youtube.com"
+    ]
+  },
   "minecraft": {
     "enabled": false,
+    "link_backend": "",
     "rcon_ip": "localhost",
-    "rcon_port": 25575,
-    "rcon_password": "PUT_RCON_PASSWORD_HERE"
+    "rcon_password": "PUT_RCON_PASSWORD_HERE",
+    "rcon_port": 25575
   },
-
+  "moderation": {
+    "auto_mod": {
+      "anti_spam_count": 5,
+      "anti_spam_seconds": 5,
+      "enabled": false,
+      "max_lines": 30,
+      "max_mentions": 5
+    },
+    "mod_log_channel": "PUT_MOD_LOG_CHANNEL_ID_HERE",
+    "mute_role": "PUT_MUTE_ROLE_ID_HERE"
+  },
+  "music": {
+    "allow_playlists": true,
+    "backend": "lavalink",
+    "default_volume": 50,
+    "direct": {
+      "ffmpeg_path": "ffmpeg",
+      "ytdlp_path": "./yt-dlp"
+    },
+    "enabled": false,
+    "lavalink": {
+      "host": "localhost",
+      "password": "PUT_LAVALINK_PASSWORD_HERE",
+      "port": 2333,
+      "secure": false
+    },
+    "max_queue_size": 100,
+    "max_song_duration": 600
+  },
+  "no_ping": {
+    "bypass_roles": [],
+    "delete_message": false,
+    "enabled": false,
+    "message": "",
+    "protected_roles": []
+  },
+  "payment": {
+    "coinbase": {
+      "_comment_cdp": "OR use the Coinbase App API address flow with a normal Coinbase account. Create a key for the Coinbase App API with wallet permissions, then set both fields below. When set, this takes precedence over api_key.",
+      "_comment_legacy": "Set api_key for the legacy Coinbase Commerce hosted checkout (X-CC-Api-Key).",
+      "api_key": "",
+      "assets": [
+        {
+          "asset": "USDC",
+          "network": "base"
+        },
+        {
+          "asset": "BTC",
+          "network": ""
+        },
+        {
+          "asset": "ETH",
+          "network": ""
+        }
+      ],
+      "button_label": "Pay with Coinbase",
+      "cdp_key_name": "organizations/YOUR_ORG_ID/apiKeys/YOUR_KEY_ID",
+      "cdp_private_key": "YOUR_BASE64_ED25519_PRIVATE_KEY",
+      "currency": "USD",
+      "enabled": false,
+      "handling_fee": 0,
+      "name": "Coinbase",
+      "payment_notifications": {
+        "type": "polling",
+        "webhook_id": "",
+        "webhook_shared_secret": "",
+        "webhook_signing_secret": ""
+      }
+    },
+    "paypal": {
+      "button_label": "Pay with PayPal",
+      "client_id": "PUT_PAYPAL_CLIENT_ID_HERE",
+      "client_secret": "PUT_PAYPAL_CLIENT_SECRET_HERE",
+      "currency": "USD",
+      "enable_partial_payments": false,
+      "enabled": false,
+      "handling_fee": 0,
+      "merchant_email": "billing@example.com",
+      "merchant_name": "Your Business",
+      "minimum_due_percentage": 0,
+      "name": "PayPal",
+      "payment_notifications": {
+        "type": "polling",
+        "webhook_id": "",
+        "webhook_shared_secret": "",
+        "webhook_signing_secret": ""
+      },
+      "use_sandbox": false
+    },
+    "stripe": {
+      "button_label": "Pay with Stripe",
+      "cancel_url": "https://example.com/payment/cancel",
+      "currency": "USD",
+      "enabled": false,
+      "handling_fee": 0,
+      "name": "Stripe",
+      "payment_notifications": {
+        "type": "polling",
+        "webhook_id": "",
+        "webhook_shared_secret": "",
+        "webhook_signing_secret": ""
+      },
+      "publishable_key": "PUT_STRIPE_PUBLISHABLE_KEY_HERE",
+      "secret_key": "PUT_STRIPE_SECRET_KEY_HERE",
+      "success_url": "https://example.com/payment/success",
+      "use_sandbox": false
+    },
+    "webhook": {
+      "api_url": "https://api.example.com",
+      "enabled": false,
+      "port": 8080
+    }
+  },
   "permissions": {
     "admin_roles": [
       "Admin",
       "Owner"
     ],
-    "moderator_roles": [
-      "Moderator",
-      "Mod"
-    ],
     "dj_roles": [
       "DJ",
       "Music"
+    ],
+    "moderator_roles": [
+      "Moderator",
+      "Mod"
     ]
   },
-
-  "music": {
-    "enabled": false,
-    "backend": "lavalink",
-    "max_queue_size": 100,
-    "max_song_duration": 600,
-    "allow_playlists": true,
-    "default_volume": 50,
-
-    "direct": {
-      "ytdlp_path": "./yt-dlp",
-      "ffmpeg_path": "ffmpeg"
-    },
-
-    "lavalink": {
-      "host": "localhost",
-      "port": 2333,
-      "password": "PUT_LAVALINK_PASSWORD_HERE",
-      "secure": false
-    }
-  },
-
-  "welcome": {
-    "enabled": false,
-    "channel_id": "PUT_WELCOME_CHANNEL_ID_HERE",
-
-    "embed": {
-      "colour": "#f74343",
-      "title": "Welcome!",
-      "message": "👋 Welcome %joined_user%!",
-      "thumbnail": "BOT",
-      "image_enabled": false,
-      "image_url": ""
-    }
-  },
-
-  "leave": {
-    "enabled": false,
-    "channel_id": "PUT_LEAVE_CHANNEL_ID_HERE",
-
-    "embed": {
-      "colour": "#f74343",
-      "title": "Goodbye!",
-      "message": "👋 %joined_user% has left the server.",
-      "thumbnail": "BOT",
-      "image_enabled": false,
-      "image_url": ""
-    }
-  },
-
-  "moderation": {
-    "mod_log_channel": "PUT_MOD_LOG_CHANNEL_ID_HERE",
-    "mute_role": "PUT_MUTE_ROLE_ID_HERE",
-
-    "auto_mod": {
-      "enabled": false,
-      "max_mentions": 5,
-      "max_lines": 30,
-      "anti_spam_seconds": 5,
-      "anti_spam_count": 5
-    }
-  },
-
-  "link_filter": {
-    "enabled": false,
-    "allowed_roles": [
-      "PUT_ROLE_ID_ALLOWED_TO_POST_LINKS_HERE"
-    ],
-    "whitelist_domains": [
-      "github.com",
-      "youtube.com"
-    ],
-    "block_invites": true,
-    "delete_message": true,
-    "message": "{user} You are not allowed to post links here."
-  },
-
-  "anti_scam": {
-    "enabled": false,
-    "score_threshold": 2,
-    "timeout_minutes": 0,
-    "extra_domains": [],
-    "extra_keywords": [],
-    "message": "⚠️ {user}, your message was removed for looking like a scam. If this was a mistake, contact a moderator.",
-    "block_lookalikes": true,
-    "protect_new_accounts": true,
-    "new_account_days": 7,
-    "feed": {
-      "enabled": true,
-      "urls": [
-        "https://raw.githubusercontent.com/Discord-AntiScam/scam-links/main/list.json"
-      ],
-      "refresh_minutes": 360
-    },
-    "ocr": {
-      "enabled": false,
-      "api_key": "PUT_OCR_SPACE_API_KEY_HERE",
-      "max_image_bytes": 3145728
-    }
-  },
-
   "tickets": {
-    "enabled": false,
-    "panel_channel": "PUT_TICKET_PANEL_CHANNEL_ID_HERE",
-    "log_channel": "PUT_TICKET_LOG_CHANNEL_ID_HERE",
-    "staff_roles": "PUT_STAFF_ROLE_ID_HERE",
-    "discord_category": "PUT_TICKET_CATEGORY_ID_HERE",
-    "max_open_per_user": 3,
-
     "categories": [
       {
+        "description": "General support requests",
+        "emoji": "🛠️",
         "id": "support",
         "name": "Support",
         "staff_role": "PUT_STAFF_ROLE_ID_HERE",
-        "emoji": "🛠️",
-        "description": "General support requests",
-
         "subcategories": [
           {
-            "id": "technical",
-            "name": "Technical Support",
+            "description": "Technical issues and bug reports",
             "emoji": "🔧",
-            "description": "Technical issues and bug reports"
+            "id": "technical",
+            "name": "Technical Support"
           },
-
           {
-            "id": "general",
-            "name": "General",
+            "description": "General questions",
             "emoji": "❓",
-            "description": "General questions"
+            "id": "general",
+            "name": "General"
           }
         ]
       },
-
       {
+        "description": "Discord-related questions",
+        "emoji": "💬",
         "id": "discord",
         "name": "Discord",
         "staff_role": "PUT_STAFF_ROLE_ID_HERE",
-        "emoji": "💬",
-        "description": "Discord-related questions",
         "subcategories": []
       },
-
       {
+        "description": "Partnership requests",
+        "emoji": "🤝",
         "id": "partnership",
         "name": "Partnership",
         "staff_role": "PUT_STAFF_ROLE_ID_HERE",
-        "emoji": "🤝",
-        "description": "Partnership requests",
         "subcategories": []
       }
-    ]
-  },
-
-  "commissions": {
+    ],
+    "discord_category": "PUT_TICKET_CATEGORY_ID_HERE",
     "enabled": false,
-    "panel_channel": "PUT_COMMISSION_PANEL_CHANNEL_ID_HERE",
-    "log_channel": "PUT_COMMISSION_LOG_CHANNEL_ID_HERE",
-    "staff_roles": "PUT_STAFF_ROLE_ID_HERE",
-    "discord_category": "PUT_COMMISSION_CATEGORY_ID_HERE",
-    "paypal_email": "",
-    "paypal_me_user": "",
-
-    "_comment_legal": "Shown as a legal notice at the bottom of invoices. Leave empty to omit. Newlines (\\n) are supported. Example for a French sole trader below.",
-    "legal_entity": "Your Company — Type of Business\nSIREN 000 000 000 · SIRET 000 000 000 00000 · Code APE 00.00Z · Country",
-
-    "services": [
-      {
-        "id": "example",
-        "name": "Example Service",
-        "emoji": "🛠️",
-        "description": "Describe what this service is",
-        "starting_price": "50 EUR"
-      }
-    ]
+    "log_channel": "PUT_TICKET_LOG_CHANNEL_ID_HERE",
+    "max_open_per_user": 3,
+    "panel_channel": "PUT_TICKET_PANEL_CHANNEL_ID_HERE",
+    "staff_roles": "PUT_STAFF_ROLE_ID_HERE"
   },
-
-  "payment": {
-    "paypal": {
-      "enabled": false,
-      "name": "PayPal",
-      "button_label": "Pay with PayPal",
-      "use_sandbox": false,
-      "client_id": "PUT_PAYPAL_CLIENT_ID_HERE",
-      "client_secret": "PUT_PAYPAL_CLIENT_SECRET_HERE",
-      "merchant_name": "Your Business",
-      "merchant_email": "billing@example.com",
-      "enable_partial_payments": false,
-      "minimum_due_percentage": 0,
-      "handling_fee": 0,
-      "currency": "USD",
-      "payment_notifications": { "type": "polling" }
+  "verify": {
+    "products": []
+  },
+  "welcome": {
+    "channel_id": "PUT_WELCOME_CHANNEL_ID_HERE",
+    "embed": {
+      "colour": "#f74343",
+      "image_enabled": false,
+      "image_url": "",
+      "message": "👋 Welcome %joined_user%!",
+      "thumbnail": "BOT",
+      "title": "Welcome!"
     },
-
-    "stripe": {
-      "enabled": false,
-      "name": "Stripe",
-      "button_label": "Pay with Stripe",
-      "use_sandbox": false,
-      "publishable_key": "PUT_STRIPE_PUBLISHABLE_KEY_HERE",
-      "secret_key": "PUT_STRIPE_SECRET_KEY_HERE",
-      "handling_fee": 0,
-      "currency": "USD",
-      "success_url": "https://example.com/payment/success",
-      "cancel_url": "https://example.com/payment/cancel",
-      "payment_notifications": { "type": "polling" }
-    },
-
-    "coinbase": {
-      "enabled": false,
-      "name": "Coinbase",
-      "button_label": "Pay with Coinbase",
-
-      "_comment_legacy": "Set api_key for the legacy Coinbase Commerce hosted checkout (X-CC-Api-Key).",
-      "api_key": "",
-
-      "_comment_cdp": "OR use the Coinbase App API address flow with a normal Coinbase account. Create a key for the Coinbase App API with wallet permissions, then set both fields below. When set, this takes precedence over api_key.",
-      "cdp_key_name": "organizations/YOUR_ORG_ID/apiKeys/YOUR_KEY_ID",
-      "cdp_private_key": "YOUR_BASE64_ED25519_PRIVATE_KEY",
-      "assets": [
-        { "asset": "USDC", "network": "base" },
-        { "asset": "BTC" },
-        { "asset": "ETH" }
-      ],
-
-      "handling_fee": 0,
-      "currency": "USD",
-      "payment_notifications": { "type": "polling" }
-    },
-
-    "webhook": {
-      "enabled": false,
-      "port": 8080,
-      "api_url": "https://api.example.com"
-    }
+    "enabled": false
+  },
+  "youtube": {
+    "api_key": "PUT_YOUTUBE_API_KEY_HERE"
   }
 }
