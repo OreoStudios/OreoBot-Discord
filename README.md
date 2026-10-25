@@ -76,10 +76,10 @@ Keep real bot tokens, API keys, webhook secrets, payment credentials, and databa
 
 ## Pterodactyl
 
-Two egg definitions are included in `.claude/`:
+Two egg definitions are included in `Eggs pterodactyle/`:
 
-- [`egg-oreo-bot-discord.json`](.claude/egg-oreo-bot-discord.json) downloads `bot.bin` from the latest GitHub release. It downloads `config.json` and `lang.yml` from the repository during installation.
-- [`egg-oreo-bot-local-binary.json`](.claude/egg-oreo-bot-local-binary.json) runs a `bot.bin` you upload to the server. It still downloads `config.json` and `lang.yml` from the repository.
+- [`egg-oreo-bot-discord.json`](Eggs pterodactyle/egg-oreo-bot-discord.json) downloads `bot.bin` from the latest GitHub release. It downloads `config.json` and `lang.yml` from the repository during installation.
+- [`egg-oreo-bot-local-binary.json`](Eggs pterodactyle/egg-oreo-bot-local-binary.json) runs a `bot.bin` you upload to the server. It still downloads `config.json` and `lang.yml` from the repository.
 
 For the local-binary egg, upload the Linux amd64 `bot.bin` to the server’s root directory before starting the server. For either egg, configure `config.json` with your bot token and server settings after installation.
 
