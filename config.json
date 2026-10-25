@@ -1,261 +1,231 @@
 {
-    "anti_scam":  {
-                      "block_lookalikes":  true,
-                      "enabled":  false,
-                      "extra_domains":  [
-
-                                        ],
-                      "extra_keywords":  [
-
-                                         ],
-                      "feed":  {
-                                   "enabled":  true,
-                                   "refresh_minutes":  360,
-                                   "urls":  [
-                                                "https://raw.githubusercontent.com/Discord-AntiScam/scam-links/main/list.json"
-                                            ]
-                               },
-                      "message":  "âš ï¸ {user}, your message was removed for looking like a scam. If this was a mistake, contact a moderator.",
-                      "new_account_days":  7,
-                      "ocr":  {
-                                  "api_key":  "",
-                                  "enabled":  false,
-                                  "max_image_bytes":  3145728
-                              },
-                      "protect_new_accounts":  true,
-                      "score_threshold":  2,
-                      "timeout_minutes":  0
-                  },
-    "auto_restart_minutes":  0,
-    "chat_bridge":  {
-                        "ban_sync":  false,
-                        "channel_id":  "",
-                        "enabled":  false,
-                        "mc_channel_id":  "",
-                        "mod_sync":  false,
-                        "rabbitmq_uri":  ""
-                    },
-    "commissions":  {
-                        "discord_category":  "",
-                        "enabled":  false,
-                        "legal_entity":  "",
-                        "log_channel":  "",
-                        "panel_channel":  "",
-                        "paypal_email":  "",
-                        "paypal_me_user":  "",
-                        "services":  [
-
-                                     ],
-                        "staff_roles":  ""
-                    },
-    "counting_game":  {
-                          "channel_id":  "",
-                          "delete_non_numbers":  true,
-                          "delete_wrong":  true,
-                          "enabled":  false,
-                          "fail_resets":  false
-                      },
-    "custom_commands":  [
-
-                        ],
-    "database":  {
-                     "driver":  "sqlite",
-                     "mongodb":  {
-                                     "database":  "discord_bot",
-                                     "uri":  "mongodb://localhost:27017"
-                                 },
-                     "sqlite":  {
-                                    "path":  "data/bot.db"
-                                }
-                 },
-    "discord":  {
-                    "guild_id":  "",
-                    "prefix":  "!",
-                    "token":  ""
-                },
-    "github":  {
-                   "enabled":  false,
-                   "subscriptions":  [
-
-                                     ],
-                   "webhook_port":  8080,
-                   "webhook_secret":  ""
-               },
-    "leave":  {
-                  "channel_id":  "",
-                  "embed":  {
-                                "colour":  "#5865F2",
-                                "image_enabled":  false,
-                                "image_url":  "",
-                                "message":  "%joined_user% has left.",
-                                "thumbnail":  "BOT",
-                                "title":  "Goodbye!"
-                            },
-                  "enabled":  false
-              },
-    "link_filter":  {
-                        "allowed_roles":  [
-
-                                          ],
-                        "block_invites":  true,
-                        "delete_message":  true,
-                        "enabled":  false,
-                        "message":  "",
-                        "whitelist_domains":  [
-
-                                              ]
-                    },
-    "minecraft":  {
-                      "enabled":  false,
-                      "link_backend":  "file",
-                      "rcon_ip":  "127.0.0.1",
-                      "rcon_password":  "",
-                      "rcon_port":  25575
-                  },
-    "moderation":  {
-                       "auto_mod":  {
-                                        "anti_spam_count":  5,
-                                        "anti_spam_seconds":  5,
-                                        "enabled":  false,
-                                        "max_lines":  30,
-                                        "max_mentions":  5
-                                    },
-                       "mod_log_channel":  "",
-                       "mute_role":  ""
-                   },
-    "music":  {
-                  "allow_playlists":  true,
-                  "backend":  "direct",
-                  "default_volume":  50,
-                  "direct":  {
-                                 "ffmpeg_path":  "ffmpeg",
-                                 "ytdlp_path":  "yt-dlp"
-                             },
-                  "enabled":  false,
-                  "lavalink":  {
-                                   "host":  "localhost",
-                                   "password":  "youshallnotpass",
-                                   "port":  2333,
-                                   "secure":  false
-                               },
-                  "max_queue_size":  100,
-                  "max_song_duration":  600
-              },
-    "no_ping":  {
-                    "bypass_roles":  [
-
-                                     ],
-                    "delete_message":  true,
-                    "enabled":  false,
-                    "message":  "{user}, you are not allowed to ping {role}.",
-                    "protected_roles":  [
-
-                                        ]
-                },
-    "payment":  {
-                    "coinbase":  {
-                                     "api_key":  "",
-                                     "assets":  [
-
-                                                ],
-                                     "button_label":  "Pay with Coinbase",
-                                     "cdp_key_name":  "",
-                                     "cdp_private_key":  "",
-                                     "currency":  "USD",
-                                     "enabled":  false,
-                                     "handling_fee":  0,
-                                     "name":  "Coinbase",
-                                     "payment_notifications":  {
-                                                                   "type":  "polling",
-                                                                   "webhook_id":  "",
-                                                                   "webhook_shared_secret":  "",
-                                                                   "webhook_signing_secret":  ""
-                                                               }
-                                 },
-                    "paypal":  {
-                                   "button_label":  "Pay with PayPal",
-                                   "client_id":  "",
-                                   "client_secret":  "",
-                                   "currency":  "USD",
-                                   "enable_partial_payments":  false,
-                                   "enabled":  false,
-                                   "handling_fee":  0,
-                                   "merchant_email":  "",
-                                   "merchant_name":  "",
-                                   "minimum_due_percentage":  0,
-                                   "name":  "PayPal",
-                                   "payment_notifications":  {
-                                                                 "type":  "polling",
-                                                                 "webhook_id":  "",
-                                                                 "webhook_shared_secret":  "",
-                                                                 "webhook_signing_secret":  ""
-                                                             },
-                                   "use_sandbox":  false
-                               },
-                    "stripe":  {
-                                   "button_label":  "Pay with Stripe",
-                                   "cancel_url":  "",
-                                   "currency":  "USD",
-                                   "enabled":  false,
-                                   "handling_fee":  0,
-                                   "name":  "Stripe",
-                                   "payment_notifications":  {
-                                                                 "type":  "polling",
-                                                                 "webhook_id":  "",
-                                                                 "webhook_shared_secret":  "",
-                                                                 "webhook_signing_secret":  ""
-                                                             },
-                                   "publishable_key":  "",
-                                   "secret_key":  "",
-                                   "success_url":  "",
-                                   "use_sandbox":  false
-                               },
-                    "webhook":  {
-                                    "api_url":  "",
-                                    "enabled":  false,
-                                    "port":  8080
-                                }
-                },
-    "permissions":  {
-                        "admin_roles":  [
-
-                                        ],
-                        "dj_roles":  [
-
-                                     ],
-                        "moderator_roles":  [
-
-                                            ]
-                    },
-    "tickets":  {
-                    "categories":  [
-
-                                   ],
-                    "discord_category":  "",
-                    "enabled":  false,
-                    "log_channel":  "",
-                    "max_open_per_user":  1,
-                    "panel_channel":  "",
-                    "staff_roles":  ""
-                },
-    "verify":  {
-                   "products":  [
-
-                                ]
-               },
-    "welcome":  {
-                    "channel_id":  "",
-                    "embed":  {
-                                  "colour":  "#5865F2",
-                                  "image_enabled":  false,
-                                  "image_url":  "",
-                                  "message":  "Welcome %joined_user%!",
-                                  "thumbnail":  "BOT",
-                                  "title":  "Welcome!"
-                              },
-                    "enabled":  false
-                },
-    "youtube":  {
-                    "api_key":  ""
-                }
+  "discord": {
+    "token": "",
+    "guild_id": "",
+    "prefix": "!"
+  },
+  "anti_scam": {
+    "block_lookalikes": true,
+    "enabled": false,
+    "extra_domains": [],
+    "extra_keywords": [],
+    "feed": {
+      "enabled": true,
+      "refresh_minutes": 360,
+      "urls": [
+        "https://raw.githubusercontent.com/Discord-AntiScam/scam-links/main/list.json"
+      ]
+    },
+    "message": "âš ï¸ {user}, your message was removed for looking like a scam. If this was a mistake, contact a moderator.",
+    "new_account_days": 7,
+    "ocr": {
+      "api_key": "",
+      "enabled": false,
+      "max_image_bytes": 3145728
+    },
+    "protect_new_accounts": true,
+    "score_threshold": 2,
+    "timeout_minutes": 0
+  },
+  "auto_restart_minutes": 0,
+  "chat_bridge": {
+    "ban_sync": false,
+    "channel_id": "",
+    "enabled": false,
+    "mc_channel_id": "",
+    "mod_sync": false,
+    "rabbitmq_uri": ""
+  },
+  "commissions": {
+    "discord_category": "",
+    "enabled": false,
+    "legal_entity": "",
+    "log_channel": "",
+    "panel_channel": "",
+    "paypal_email": "",
+    "paypal_me_user": "",
+    "services": [],
+    "staff_roles": ""
+  },
+  "counting_game": {
+    "channel_id": "",
+    "delete_non_numbers": true,
+    "delete_wrong": true,
+    "enabled": false,
+    "fail_resets": false
+  },
+  "custom_commands": [],
+  "database": {
+    "driver": "sqlite",
+    "mongodb": {
+      "database": "discord_bot",
+      "uri": "mongodb://localhost:27017"
+    },
+    "sqlite": {
+      "path": "data/bot.db"
+    }
+  },
+  "github": {
+    "enabled": false,
+    "subscriptions": [],
+    "webhook_port": 8080,
+    "webhook_secret": ""
+  },
+  "leave": {
+    "channel_id": "",
+    "embed": {
+      "colour": "#5865F2",
+      "image_enabled": false,
+      "image_url": "",
+      "message": "%joined_user% has left.",
+      "thumbnail": "BOT",
+      "title": "Goodbye!"
+    },
+    "enabled": false
+  },
+  "link_filter": {
+    "allowed_roles": [],
+    "block_invites": true,
+    "delete_message": true,
+    "enabled": false,
+    "message": "",
+    "whitelist_domains": []
+  },
+  "minecraft": {
+    "enabled": false,
+    "link_backend": "file",
+    "rcon_ip": "127.0.0.1",
+    "rcon_password": "",
+    "rcon_port": 25575
+  },
+  "moderation": {
+    "auto_mod": {
+      "anti_spam_count": 5,
+      "anti_spam_seconds": 5,
+      "enabled": false,
+      "max_lines": 30,
+      "max_mentions": 5
+    },
+    "mod_log_channel": "",
+    "mute_role": ""
+  },
+  "music": {
+    "allow_playlists": true,
+    "backend": "direct",
+    "default_volume": 50,
+    "direct": {
+      "ffmpeg_path": "ffmpeg",
+      "ytdlp_path": "yt-dlp"
+    },
+    "enabled": false,
+    "lavalink": {
+      "host": "localhost",
+      "password": "youshallnotpass",
+      "port": 2333,
+      "secure": false
+    },
+    "max_queue_size": 100,
+    "max_song_duration": 600
+  },
+  "no_ping": {
+    "bypass_roles": [],
+    "delete_message": true,
+    "enabled": false,
+    "message": "{user}, you are not allowed to ping {role}.",
+    "protected_roles": []
+  },
+  "payment": {
+    "coinbase": {
+      "api_key": "",
+      "assets": [],
+      "button_label": "Pay with Coinbase",
+      "cdp_key_name": "",
+      "cdp_private_key": "",
+      "currency": "USD",
+      "enabled": false,
+      "handling_fee": 0,
+      "name": "Coinbase",
+      "payment_notifications": {
+        "type": "polling",
+        "webhook_id": "",
+        "webhook_shared_secret": "",
+        "webhook_signing_secret": ""
+      }
+    },
+    "paypal": {
+      "button_label": "Pay with PayPal",
+      "client_id": "",
+      "client_secret": "",
+      "currency": "USD",
+      "enable_partial_payments": false,
+      "enabled": false,
+      "handling_fee": 0,
+      "merchant_email": "",
+      "merchant_name": "",
+      "minimum_due_percentage": 0,
+      "name": "PayPal",
+      "payment_notifications": {
+        "type": "polling",
+        "webhook_id": "",
+        "webhook_shared_secret": "",
+        "webhook_signing_secret": ""
+      },
+      "use_sandbox": false
+    },
+    "stripe": {
+      "button_label": "Pay with Stripe",
+      "cancel_url": "",
+      "currency": "USD",
+      "enabled": false,
+      "handling_fee": 0,
+      "name": "Stripe",
+      "payment_notifications": {
+        "type": "polling",
+        "webhook_id": "",
+        "webhook_shared_secret": "",
+        "webhook_signing_secret": ""
+      },
+      "publishable_key": "",
+      "secret_key": "",
+      "success_url": "",
+      "use_sandbox": false
+    },
+    "webhook": {
+      "api_url": "",
+      "enabled": false,
+      "port": 8080
+    }
+  },
+  "permissions": {
+    "admin_roles": [],
+    "dj_roles": [],
+    "moderator_roles": []
+  },
+  "tickets": {
+    "categories": [],
+    "discord_category": "",
+    "enabled": false,
+    "log_channel": "",
+    "max_open_per_user": 1,
+    "panel_channel": "",
+    "staff_roles": ""
+  },
+  "verify": {
+    "products": []
+  },
+  "welcome": {
+    "channel_id": "",
+    "embed": {
+      "colour": "#5865F2",
+      "image_enabled": false,
+      "image_url": "",
+      "message": "Welcome %joined_user%!",
+      "thumbnail": "BOT",
+      "title": "Welcome!"
+    },
+    "enabled": false
+  },
+  "youtube": {
+    "api_key": ""
+  }
 }
