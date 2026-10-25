@@ -1,0 +1,106 @@
+{
+    "_comment":  "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta":  {
+                 "version":  "PTDL_v2",
+                 "update_url":  null
+             },
+    "exported_at":  "2026-10-25T23:03:39+02:00",
+    "name":  "OreoBot - Go Discord Bot (Local Binary)",
+    "author":  "support@oreostudios.info",
+    "description":  "Runs bot.bin uploaded to the Pterodactyl server, downloads config.json from GitHub, and installs ffmpeg + yt-dlp. Upload bot.bin to the server before starting.",
+    "features":  [
+
+                 ],
+    "docker_images":  {
+                          "Debian":  "ghcr.io/ptero-eggs/yolks:debian"
+                      },
+    "file_denylist":  [
+
+                      ],
+    "startup":  "test -f ./bot.bin || { echo \"[ERROR] Upload bot.bin to the server first.\"; exit 1; }; chmod +x ./bot.bin; (pip3 install -U yt-dlp --break-system-packages 2\u003e/dev/null || (curl -L --fail https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o yt-dlp \u0026\u0026 chmod +x yt-dlp)); ./bot.bin -config config.json",
+    "config":  {
+                   "files":  "{}",
+                   "startup":  "{\r\n    \"done\": \"[INFO] Starting bot\"\r\n}",
+                   "logs":  "{}",
+                   "stop":  "^C"
+               },
+    "scripts":  {
+                    "installation":  {
+                                         "script":  "#!/bin/bash\nset -euo pipefail\n\nmkdir -p /mnt/server\ncd /mnt/server\n\nexport DEBIAN_FRONTEND=noninteractive\napt-get update\napt-get install -y --no-install-recommends ca-certificates curl python3\n\nif [ \"${INSTALL_FFMPEG:-true}\" = \"true\" ]; then\n  apt-get install -y --no-install-recommends ffmpeg\nfi\n\napt-get clean\nrm -rf /var/lib/apt/lists/*\n\nRAW_BASE=\"https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}\"\n\ncurl -L --fail --retry 3 --max-time 600 -o \"./config.json\" \"${RAW_BASE}/${CONFIG_FILE}\"\n\ncurl -L --fail --retry 3 --max-time 600 -o \"./lang.yml\" \"${RAW_BASE}/lang.yml\"\n\nif [ \"${INSTALL_YTDLP:-true}\" = \"true\" ]; then\n  curl -L --fail --retry 3 -o ./yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp\n  chmod +x ./yt-dlp\nfi\n\necho \"[INFO] Installation complete.\"\nls -lah",
+                                         "container":  "ghcr.io/pterodactyl/installers:debian",
+                                         "entrypoint":  "bash"
+                                     }
+                },
+    "variables":  [
+                      {
+                          "name":  "Repo Owner",
+                          "description":  "GitHub owner or org name.",
+                          "env_variable":  "REPO_OWNER",
+                          "default_value":  "OreoStudios",
+                          "user_viewable":  true,
+                          "user_editable":  true,
+                          "rules":  "required|string|max:191",
+                          "field_type":  "text"
+                      },
+                      {
+                          "name":  "Repo Name",
+                          "description":  "GitHub repository name.",
+                          "env_variable":  "REPO_NAME",
+                          "default_value":  "OreoBot-Discord",
+                          "user_viewable":  true,
+                          "user_editable":  true,
+                          "rules":  "required|string|max:191",
+                          "field_type":  "text"
+                      },
+                      {
+                          "name":  "Branch",
+                          "description":  "Git branch to download files from.",
+                          "env_variable":  "BRANCH",
+                          "default_value":  "main",
+                          "user_viewable":  true,
+                          "user_editable":  true,
+                          "rules":  "required|string|max:191",
+                          "field_type":  "text"
+                      },
+                      {
+                          "name":  "Bot File",
+                          "description":  "Binary filename in the repo.",
+                          "env_variable":  "BOT_FILE",
+                          "default_value":  "bot.bin",
+                          "user_viewable":  true,
+                          "user_editable":  true,
+                          "rules":  "required|string|max:191",
+                          "field_type":  "text"
+                      },
+                      {
+                          "name":  "Config File",
+                          "description":  "Config filename in the repo.",
+                          "env_variable":  "CONFIG_FILE",
+                          "default_value":  "config.json",
+                          "user_viewable":  true,
+                          "user_editable":  true,
+                          "rules":  "required|string|max:191",
+                          "field_type":  "text"
+                      },
+                      {
+                          "name":  "Install ffmpeg",
+                          "description":  "Set to true to install ffmpeg for music features.",
+                          "env_variable":  "INSTALL_FFMPEG",
+                          "default_value":  "true",
+                          "user_viewable":  true,
+                          "user_editable":  true,
+                          "rules":  "required|string|in:true,false",
+                          "field_type":  "text"
+                      },
+                      {
+                          "name":  "Install yt-dlp",
+                          "description":  "Set to true to download the yt-dlp binary.",
+                          "env_variable":  "INSTALL_YTDLP",
+                          "default_value":  "true",
+                          "user_viewable":  true,
+                          "user_editable":  true,
+                          "rules":  "required|string|in:true,false",
+                          "field_type":  "text"
+                      }
+                  ]
+}
