@@ -368,6 +368,9 @@ func handleTicketConfigCmd(s *discordgo.Session, i *discordgo.InteractionCreate)
 	staffRolesOverride := gs.TicketRuntime.StaffRolesOverride
 	extraCatCount := len(gs.TicketRuntime.ExtraCategories)
 	openTicketCount := len(gs.TicketRuntime.OpenTickets)
+	discordCatOverride := gs.TicketRuntime.DiscordCategoryOverride
+	effectiveDiscordCat := config.EffectiveTicketCategory(cfg, gs)
+	overflowIDs := append([]string(nil), gs.TicketRuntime.OverflowCategories[effectiveDiscordCat]...)
 	gs.Unlock()
 
 	var sb strings.Builder
@@ -385,6 +388,12 @@ func handleTicketConfigCmd(s *discordgo.Session, i *discordgo.InteractionCreate)
 	sb.WriteString(fmt.Sprintf("Log Channel: `%s`\n", logChanOverride))
 	sb.WriteString(fmt.Sprintf("Staff Roles: `%s`\n", staffRolesOverride))
 	sb.WriteString(fmt.Sprintf("Extra Categories: `%d`\n", extraCatCount))
+	sb.WriteString(fmt.Sprintf("Discord Category Override: `%s`\n", discordCatOverride))
+	sb.WriteString(fmt.Sprintf("Active Discord Ticket Category: <#%s> (`%s`)\n", effectiveDiscordCat, effectiveDiscordCat))
+	sb.WriteString(fmt.Sprintf("Tracked Overflow Discord Categories: `%d`\n", len(overflowIDs)))
+	for _, overflowID := range overflowIDs {
+		sb.WriteString(fmt.Sprintf("  • <#%s> (`%s`)\n", overflowID, overflowID))
+	}
 	sb.WriteString(fmt.Sprintf("Open Tickets: `%d`\n\n", openTicketCount))
 	sb.WriteString("__Effective (merged) Categories:__\n")
 	for _, cat := range categories {
@@ -474,9 +483,23 @@ func handleTicketSubcategorySelect(s *discordgo.Session, i *discordgo.Interactio
 }
 
 func createTicket(s *discordgo.Session, i *discordgo.InteractionCreate, catID, subID string) {
+	// Creating an overflow category can take more than Discord's 3-second
+	// interaction window. Acknowledge first and send results as follow-ups.
+	if err := s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+		Type: discordgo.InteractionResponseDeferredChannelMessageWithSource,
+		Data: &discordgo.InteractionResponseData{Flags: discordgo.MessageFlagsEphemeral},
+	}); err != nil {
+		return
+	}
+
 	cfg := storage.Cfg
 	gs := storage.GetGuild(i.GuildID)
 	userID := i.Member.User.ID
+
+	// Serialize admission, numbering and category selection for this guild.
+	lock := ticketCreationLock(i.GuildID)
+	lock.Lock()
+	defer lock.Unlock()
 
 	maxOpen := cfg.Tickets.MaxOpenPerUser
 	if maxOpen <= 0 {
@@ -491,16 +514,15 @@ func createTicket(s *discordgo.Session, i *discordgo.InteractionCreate, catID, s
 	}
 	gs.Unlock()
 	if openCount >= maxOpen {
-		respond(s, i, lang.T("ticket_max_open",
+		followup(s, i, lang.T("ticket_max_open",
 			"count", fmt.Sprintf("%d", openCount),
 			"max", fmt.Sprintf("%d", maxOpen),
-		), true)
+		))
 		return
 	}
 
 	gs.Lock()
-	gs.TicketRuntime.TicketCounter++
-	num := gs.TicketRuntime.TicketCounter
+	num := gs.TicketRuntime.TicketCounter + 1
 	gs.Unlock()
 
 	channelName := fmt.Sprintf("ticket-%04d", num)
@@ -535,14 +557,9 @@ func createTicket(s *discordgo.Session, i *discordgo.InteractionCreate, catID, s
 		})
 	}
 
-	ch, err := s.GuildChannelCreateComplex(i.GuildID, discordgo.GuildChannelCreateData{
-		Name:                 channelName,
-		Type:                 discordgo.ChannelTypeGuildText,
-		ParentID:             discordCat,
-		PermissionOverwrites: overwrites,
-	})
+	ch, err := createTicketChannel(s, i.GuildID, discordCat, channelName, overwrites, gs)
 	if err != nil {
-		respond(s, i, lang.T("ticket_create_failed", "error", err.Error()), true)
+		followup(s, i, lang.T("ticket_create_failed", "error", err.Error()))
 		return
 	}
 
@@ -573,6 +590,10 @@ func createTicket(s *discordgo.Session, i *discordgo.InteractionCreate, catID, s
 		CreatedAt:   time.Now().Format(time.RFC3339),
 	}
 	gs.Lock()
+	gs.TicketRuntime.TicketCounter = num
+	if gs.TicketRuntime.OpenTickets == nil {
+		gs.TicketRuntime.OpenTickets = make(map[string]config.Ticket)
+	}
 	gs.TicketRuntime.OpenTickets[ch.ID] = ticket
 	gs.Unlock()
 	_ = gs.Save()
@@ -605,7 +626,7 @@ func createTicket(s *discordgo.Session, i *discordgo.InteractionCreate, catID, s
 		},
 	})
 
-	respond(s, i, lang.T("ticket_created", "channel_id", ch.ID), true)
+	followup(s, i, lang.T("ticket_created", "channel_id", ch.ID))
 }
 
 func handleCloseCommand(s *discordgo.Session, i *discordgo.InteractionCreate) {
