@@ -726,6 +726,10 @@ type TicketRuntime struct {
 	PanelMessageID          string            `json:"panel_message_id"`
 	TicketCounter           int               `json:"ticket_counter"`
 	OpenTickets             map[string]Ticket `json:"open_tickets"`
+	// OverflowCategories tracks category IDs created automatically, keyed by
+	// their original Discord category ID. This avoids reusing unrelated categories
+	// and survives bot restarts or changes to /ticket setup.
+	OverflowCategories map[string][]string `json:"overflow_categories,omitempty"`
 
 	ExtraCategories []TicketCategory `json:"extra_categories,omitempty"`
 }
