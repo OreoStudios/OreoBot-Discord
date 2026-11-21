@@ -368,6 +368,9 @@ func handleTicketConfigCmd(s *discordgo.Session, i *discordgo.InteractionCreate)
 	staffRolesOverride := gs.TicketRuntime.StaffRolesOverride
 	extraCatCount := len(gs.TicketRuntime.ExtraCategories)
 	openTicketCount := len(gs.TicketRuntime.OpenTickets)
+	discordCatOverride := gs.TicketRuntime.DiscordCategoryOverride
+	effectiveDiscordCat := config.EffectiveTicketCategory(cfg, gs)
+	overflowIDs := append([]string(nil), gs.TicketRuntime.OverflowCategories[effectiveDiscordCat]...)
 	gs.Unlock()
 
 	var sb strings.Builder
@@ -385,6 +388,12 @@ func handleTicketConfigCmd(s *discordgo.Session, i *discordgo.InteractionCreate)
 	sb.WriteString(fmt.Sprintf("Log Channel: `%s`\n", logChanOverride))
 	sb.WriteString(fmt.Sprintf("Staff Roles: `%s`\n", staffRolesOverride))
 	sb.WriteString(fmt.Sprintf("Extra Categories: `%d`\n", extraCatCount))
+	sb.WriteString(fmt.Sprintf("Discord Category Override: `%s`\n", discordCatOverride))
+	sb.WriteString(fmt.Sprintf("Active Discord Ticket Category: <#%s> (`%s`)\n", effectiveDiscordCat, effectiveDiscordCat))
+	sb.WriteString(fmt.Sprintf("Tracked Overflow Discord Categories: `%d`\n", len(overflowIDs)))
+	for _, overflowID := range overflowIDs {
+		sb.WriteString(fmt.Sprintf("  • <#%s> (`%s`)\n", overflowID, overflowID))
+	}
 	sb.WriteString(fmt.Sprintf("Open Tickets: `%d`\n\n", openTicketCount))
 	sb.WriteString("__Effective (merged) Categories:__\n")
 	for _, cat := range categories {
