@@ -17,8 +17,8 @@ func testChildren(parent string, count int) []*discordgo.Channel {
 	children := make([]*discordgo.Channel, 0, count)
 	for n := 0; n < count; n++ {
 		children = append(children, &discordgo.Channel{
-			ID: fmt.Sprintf("%s-%d", parent, n),
-			Type: discordgo.ChannelTypeGuildText,
+			ID:       fmt.Sprintf("%s-%d", parent, n),
+			Type:     discordgo.ChannelTypeGuildText,
 			ParentID: parent,
 		})
 	}
