@@ -62,7 +62,7 @@ func TestModuleBoundaries(t *testing.T) {
 			"moderation":   {"config", "localization", "persistence", "shared"},
 			"shared":       {},
 			"tickets":      {"config", "localization", "persistence"},
-			"music":        {"config"},
+			"music":        {"config", "localization"},
 			"persistence":  {"config"},
 			"config":       {},
 			"localization": {},
